@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 
 
 class MainActivity : AppCompatActivity() {
@@ -55,22 +57,21 @@ class MainActivity : AppCompatActivity() {
         }
         false
     }
-
-    fun runCoroutines()
+    private fun runCoroutines()
     {
         GlobalScope.launch{
             while (turprogress <= 100 && rabprogress < 100) {
                 try {
                     delay(100L)
-                    turprogress += (Math.random() * 3).toInt()
-                    runBlocking()
+                    turprogress += (Math.random() * 30).toInt()
+                    background()
                 } catch (e: InterruptedException) {
                     e.printStackTrace()
                 }
             }
         }
     }
-    fun runBlocking() = runBlocking{
+    fun background(){
         seekBar2!!.progress = turprogress
         if (turprogress >= 100 && rabprogress < 100) {
             Toast.makeText(this@MainActivity,
@@ -79,4 +80,5 @@ class MainActivity : AppCompatActivity() {
         }
         false
     }
+
 }
