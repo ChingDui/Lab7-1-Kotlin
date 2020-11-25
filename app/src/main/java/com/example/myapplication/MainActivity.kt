@@ -63,16 +63,20 @@ class MainActivity : AppCompatActivity() {
             while (turprogress <= 100 && rabprogress < 100) {
                 try {
                     delay(100L)
+                    val msg = Message()
+                    msg.what = 1
                     turprogress += (Math.random() * 30).toInt()
-                    background()
+                    mHandler2.sendMessage(msg)
                 } catch (e: InterruptedException) {
                     e.printStackTrace()
                 }
             }
         }
     }
-    fun background(){
-        seekBar2!!.progress = turprogress
+    private val mHandler2 = Handler { msg ->
+        when (msg.what) {
+            1 -> seekBar2!!.progress = turprogress
+        }
         if (turprogress >= 100 && rabprogress < 100) {
             Toast.makeText(this@MainActivity,
                     "烏龜勝利", Toast.LENGTH_SHORT).show()
@@ -80,5 +84,4 @@ class MainActivity : AppCompatActivity() {
         }
         false
     }
-
 }
